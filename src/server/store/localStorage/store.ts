@@ -31,8 +31,32 @@ export class Store implements IStore {
     return Promise.resolve(newMemo);
   }
 
-  updateMemo(memo: Memo): Promise<Memo> {
-    throw new Error("Method not implemented.");
+  updateMemo(memo: Pick<Memo, "id" | "title" | "content">): Promise<Memo> {
+    const memoList = this.parseMemoListString(localStorage.getItem("memoList"));
+
+    const originMemo = memoList.find((memo) => memo.id === memo.id);
+
+    if (!originMemo) {
+      return this.createMemo(memo);
+    }
+
+    const newMemo: Memo = {
+      ...originMemo,
+      title: memo.title,
+      content: memo.content,
+      updatedAt: new Date(),
+    };
+
+    const newMemoList = memoList.map((memo) => {
+      if (memo.id === memo.id) {
+        return newMemo;
+      }
+      return memo;
+    });
+
+    localStorage.setItem("memoList", JSON.stringify(newMemoList));
+
+    return Promise.resolve(newMemo);
   }
 
   deleteMemo(id: number): Promise<void> {
