@@ -17,10 +17,9 @@ type Props = {
           content: string;
         }
   ) => void;
-  handleClickCancel: () => void;
 };
 
-export const EditingMemo = ({ memo, handleSave, handleClickCancel }: Props) => {
+export const EditingMemo = ({ memo, handleSave }: Props) => {
   const isNewMemo = memo === null;
   const { cancelEdit } = useMemoUsecase();
 

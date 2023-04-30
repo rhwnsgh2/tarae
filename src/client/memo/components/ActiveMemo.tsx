@@ -22,20 +22,12 @@ type Props = {
 export const ActiveMemo = ({ handleSave }: Props) => {
   const { activeMemo, isEdit, setEdit } = useContext(ActiveMemoContext);
 
-  const handleToggleEdit = () => {
-    setEdit(!isEdit);
-  };
-
   return (
     <>
       {isEdit ? (
-        <EditingMemo
-          memo={activeMemo}
-          handleSave={handleSave}
-          handleClickCancel={handleToggleEdit}
-        />
+        <EditingMemo memo={activeMemo} handleSave={handleSave} />
       ) : (
-        <div onDoubleClick={handleToggleEdit}>{activeMemo?.content}</div>
+        <div onDoubleClick={(e) => setEdit(true)}>{activeMemo?.content}</div>
       )}
     </>
   );
