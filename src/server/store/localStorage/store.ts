@@ -1,7 +1,8 @@
 import { Memo } from "@/types/memo";
 import { IStore } from "../interface";
+import { v4 as uuid } from "uuid";
 
-export class LocalStorage implements IStore {
+export class Store implements IStore {
   getMemoList(): Promise<Memo[]> {
     const memoList = this.parseMemoListString(localStorage.getItem("memoList"));
 
@@ -12,14 +13,22 @@ export class LocalStorage implements IStore {
     throw new Error("Method not implemented.");
   }
 
-  createMemo(memo: Memo): Promise<Memo> {
+  createMemo(memo: Pick<Memo, "title" | "content">): Promise<Memo> {
     const memoList = this.parseMemoListString(localStorage.getItem("memoList"));
 
-    const newMemoList = [...memoList, memo];
+    const newMemo: Memo = {
+      id: uuid(),
+      title: memo.title,
+      content: memo.content,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    const newMemoList = [...memoList, newMemo];
 
     localStorage.setItem("memoList", JSON.stringify(newMemoList));
 
-    return Promise.resolve(memo);
+    return Promise.resolve(newMemo);
   }
 
   updateMemo(memo: Memo): Promise<Memo> {

@@ -1,3 +1,5 @@
+import { MemoList } from "@/client/memo/components/MemoList";
+
 export default function Home() {
-  return <div>Hello Tarae</div>;
+  return <MemoList />;
 }
