@@ -31,24 +31,26 @@ export class Store implements IStore {
     return Promise.resolve(newMemo);
   }
 
-  updateMemo(memo: Pick<Memo, "id" | "title" | "content">): Promise<Memo> {
+  updateMemo(
+    updateMemo: Pick<Memo, "id" | "title" | "content">
+  ): Promise<Memo> {
     const memoList = this.parseMemoListString(localStorage.getItem("memoList"));
 
-    const originMemo = memoList.find((memo) => memo.id === memo.id);
+    const originMemo = memoList.find((memo) => memo.id === updateMemo.id);
 
     if (!originMemo) {
-      return this.createMemo(memo);
+      return this.createMemo(updateMemo);
     }
 
     const newMemo: Memo = {
       ...originMemo,
-      title: memo.title,
-      content: memo.content,
+      title: updateMemo.title,
+      content: updateMemo.content,
       updatedAt: new Date(),
     };
 
     const newMemoList = memoList.map((memo) => {
-      if (memo.id === memo.id) {
+      if (memo.id === newMemo.id) {
         return newMemo;
       }
       return memo;

@@ -1,9 +1,11 @@
 import { Memo } from "@/types/memo";
 import { MemoUsecase } from "../usecase";
 import { Store } from "@/server/store/localStorage/store";
-import { useCallback, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
+import { ActiveMemoContext } from "../context/ActiveMemoProvider";
 
 export const useMemoUsecase = (): MemoUsecase => {
+  const activeMemoContext = useContext(ActiveMemoContext);
   const store = useMemo(() => new Store(), []);
 
   const getMemoList = useCallback((): Promise<Memo[]> => {
@@ -25,8 +27,23 @@ export const useMemoUsecase = (): MemoUsecase => {
     [store]
   );
 
+  const selectMemo = useCallback(
+    (memo: Memo) => {
+      console.log(memo.id);
+      activeMemoContext.setActiveMemo(memo);
+      activeMemoContext.setEdit(false);
+    },
+    [activeMemoContext]
+  );
+
+  const cancelEdit = useCallback(() => {
+    activeMemoContext.setEdit(false);
+  }, [activeMemoContext]);
+
   return {
     getMemoList,
     saveMemo,
+    selectMemo,
+    cancelEdit,
   };
 };

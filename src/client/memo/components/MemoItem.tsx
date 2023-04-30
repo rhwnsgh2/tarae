@@ -1,18 +1,13 @@
 import { Memo } from "@/types/memo";
-import { useContext } from "react";
-import { ActiveMemoContext } from "./MemoMain";
+import { useMemoUsecase } from "../hooks/useMemoUsecase";
 
 export const MemoItem = ({ memo }: { memo: Memo }) => {
-  const activeMemo = useContext(ActiveMemoContext);
-
-  const handleClickSelect = () => {
-    activeMemo.setActiveMemoId(memo.id);
-  };
+  const { selectMemo } = useMemoUsecase();
 
   return (
     <div>
       {memo.title} {memo.content}
-      <button onClick={handleClickSelect}> 선택 </button>
+      <button onClick={(e) => selectMemo(memo)}> 선택 </button>
     </div>
   );
 };

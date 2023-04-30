@@ -1,9 +1,10 @@
 import { Memo } from "@/types/memo";
 import { MemoSaveButton } from "./MemoSaveButton";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { EditingMemo } from "./EditingMemo";
+import { ActiveMemoContext } from "../context/ActiveMemoProvider";
 
 type Props = {
-  memo: Memo | undefined;
   handleSave: (
     memo:
       | {
@@ -18,24 +19,24 @@ type Props = {
   ) => void;
 };
 
-export const ActiveMemo = ({ memo, handleSave }: Props) => {
-  const [content, setContent] = useState(memo?.content ?? "");
+export const ActiveMemo = ({ handleSave }: Props) => {
+  const { activeMemo, isEdit, setEdit } = useContext(ActiveMemoContext);
 
-  const handleClickSaveButton = () => {
-    if (memo) {
-      handleSave({ id: memo.id, title: memo.title, content });
-      return;
-    }
-    handleSave({ title: "New Memo", content });
-  };
-
-  const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.currentTarget.value);
+  const handleToggleEdit = () => {
+    setEdit(!isEdit);
   };
 
   return (
     <>
-      <MemoSaveButton handleSave={handleClickSaveButton} />
+      {isEdit ? (
+        <EditingMemo
+          memo={activeMemo}
+          handleSave={handleSave}
+          handleClickCancel={handleToggleEdit}
+        />
+      ) : (
+        <div onDoubleClick={handleToggleEdit}>{activeMemo?.content}</div>
+      )}
     </>
   );
 };
