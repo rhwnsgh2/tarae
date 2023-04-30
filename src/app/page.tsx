@@ -1,5 +1,5 @@
-import { MemoList } from "@/client/memo/components/MemoList";
+import { MemoMain } from "@/client/memo/components/MemoMain";
 
 export default function Home() {
-  return <MemoList />;
+  return <MemoMain />;
 }
