@@ -27,7 +27,6 @@ export const EditingMemo = ({ memo, handleSave }: Props) => {
 
   const handleClickSaveButton = () => {
     if (memo) {
-      console.log(memo.id);
       handleSave({ id: memo.id, title: memo.title, content });
       return;
     }

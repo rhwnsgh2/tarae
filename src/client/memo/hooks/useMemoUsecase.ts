@@ -29,7 +29,6 @@ export const useMemoUsecase = (): MemoUsecase => {
 
   const selectMemo = useCallback(
     (memo: Memo) => {
-      console.log(memo.id);
       activeMemoContext.setActiveMemo(memo);
       activeMemoContext.setEdit(false);
     },
