@@ -1,11 +1,21 @@
 "use client";
+import { createContext, useMemo, useState } from "react";
 import { useGetMemoList } from "../hooks/useGetMemoList";
 import { useMemoUsecase } from "../hooks/useMemoUsecase";
-import { MemoForm } from "./MemoForm";
+import { ActiveMemo } from "./ActiveMemo";
 import { MemoList } from "./MemoList";
+
+export const ActiveMemoContext = createContext<{
+  activeMemoId: string | null;
+  setActiveMemoId: (id: string) => void;
+}>({
+  activeMemoId: null,
+  setActiveMemoId: () => {},
+});
 
 export const MemoMain = () => {
   const { memoList, refetchMemoList } = useGetMemoList();
+  const [activeMemoId, setActiveMemoId] = useState<string | null>(null);
   const { saveMemo } = useMemoUsecase();
 
   const handleSave = (
@@ -25,10 +35,19 @@ export const MemoMain = () => {
     });
   };
 
+  const activeMemo = useMemo(() => {
+    return memoList.find((memo) => memo.id === activeMemoId);
+  }, [activeMemoId, memoList]);
+
   return (
-    <>
-      <MemoForm handleSave={handleSave} memo={null} />
+    <ActiveMemoContext.Provider
+      value={{
+        activeMemoId,
+        setActiveMemoId,
+      }}
+    >
+      <ActiveMemo handleSave={handleSave} memo={activeMemo} />
       <MemoList memoList={memoList} />
-    </>
+    </ActiveMemoContext.Provider>
   );
 };

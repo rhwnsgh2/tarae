@@ -3,7 +3,7 @@ import { MemoSaveButton } from "./MemoSaveButton";
 import { useState } from "react";
 
 type Props = {
-  memo: Memo | null;
+  memo: Memo | undefined;
   handleSave: (
     memo:
       | {
@@ -18,7 +18,7 @@ type Props = {
   ) => void;
 };
 
-export const MemoForm = ({ memo, handleSave }: Props) => {
+export const ActiveMemo = ({ memo, handleSave }: Props) => {
   const [content, setContent] = useState(memo?.content ?? "");
 
   const handleClickSaveButton = () => {
@@ -35,11 +35,6 @@ export const MemoForm = ({ memo, handleSave }: Props) => {
 
   return (
     <>
-      <textarea
-        placeholder="Record your ideas"
-        value={content}
-        onChange={handleChangeContent}
-      ></textarea>
       <MemoSaveButton handleSave={handleClickSaveButton} />
     </>
   );
