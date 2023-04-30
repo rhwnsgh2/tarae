@@ -6,7 +6,7 @@ export const useMemoUsecase = (): MemoUsecase => {
   const store = new Store();
 
   const getMemoList = (): Promise<Memo[]> => {
-    return Promise.resolve([]);
+    return store.getMemoList();
   };
 
   const saveMemo = (memo: Pick<Memo, "title" | "content">): Promise<Memo> => {
