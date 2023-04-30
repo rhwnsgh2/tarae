@@ -11,12 +11,21 @@ export class LocalStorage implements IStore {
   getMemo(id: number): Promise<Memo> {
     throw new Error("Method not implemented.");
   }
+
   createMemo(memo: Memo): Promise<Memo> {
-    throw new Error("Method not implemented.");
+    const memoList = this.parseMemoListString(localStorage.getItem("memoList"));
+
+    const newMemoList = [...memoList, memo];
+
+    localStorage.setItem("memoList", JSON.stringify(newMemoList));
+
+    return Promise.resolve(memo);
   }
+
   updateMemo(memo: Memo): Promise<Memo> {
     throw new Error("Method not implemented.");
   }
+
   deleteMemo(id: number): Promise<void> {
     throw new Error("Method not implemented.");
   }
