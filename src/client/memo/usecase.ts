@@ -1,5 +1,5 @@
 import { Memo } from "@/types/memo";
 
-interface MemoUsecase {
+export interface MemoUsecase {
   getMemoList(): Promise<Memo[]>;
 }
