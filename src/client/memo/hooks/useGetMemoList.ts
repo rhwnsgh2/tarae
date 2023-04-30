@@ -15,5 +15,11 @@ export const useGetMemoList = () => {
     });
   }, [getMemoList]);
 
-  return memoList;
+  const refetchMemoList = () => {
+    getMemoList().then((memoList) => {
+      setMemoList(memoList);
+    });
+  };
+
+  return { memoList, refetchMemoList };
 };

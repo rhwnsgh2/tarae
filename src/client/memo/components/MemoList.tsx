@@ -6,12 +6,14 @@ import { MemoItem } from "./MemoItem";
 import { MemoSaveButton } from "./MemoSaveButton";
 
 export const MemoList = () => {
-  const memoList = useGetMemoList();
+  const { memoList, refetchMemoList } = useGetMemoList();
 
   const { saveMemo } = useMemoUsecase();
 
   const handleSave = () => {
-    saveMemo({ title: "TestTitle", content: "TestContent" });
+    saveMemo({ title: "TestTitle", content: "TestContent" }).then(() => {
+      refetchMemoList();
+    });
   };
 
   return (
