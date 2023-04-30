@@ -1,17 +1,7 @@
-import { useEffect, useState } from "react";
-import { useMemoUsecase } from "../hooks/useMemoUsecase";
-import { Memo } from "@/types/memo";
+import { useGetMemoList } from "../hooks/useGetMemoList";
 
 export const MemoList = () => {
-  const { getMemoList } = useMemoUsecase();
+  const memoList = useGetMemoList();
 
-  const [memoList, setMemoList] = useState<Memo[]>([]);
-
-  useEffect(() => {
-    getMemoList().then((memoList) => {
-      setMemoList(memoList);
-    });
-  }, [getMemoList]);
-
-  return <div> </div>;
+  return <div></div>;
 };
