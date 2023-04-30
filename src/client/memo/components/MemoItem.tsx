@@ -1,5 +1,9 @@
 import { Memo } from "@/types/memo";
 
 export const MemoItem = ({ memo }: { memo: Memo }) => {
-  return <div>{memo.title}</div>;
+  return (
+    <div>
+      {memo.title} {memo.content}
+    </div>
+  );
 };

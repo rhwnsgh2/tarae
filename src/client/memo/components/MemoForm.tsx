@@ -26,7 +26,7 @@ export const MemoForm = ({ memo, handleSave }: Props) => {
       handleSave({ id: memo.id, title: memo.title, content });
       return;
     }
-    handleSave({ title: "", content });
+    handleSave({ title: "New Memo", content });
   };
 
   const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -34,13 +34,13 @@ export const MemoForm = ({ memo, handleSave }: Props) => {
   };
 
   return (
-    <form>
+    <>
       <textarea
         placeholder="Record your ideas"
         value={content}
         onChange={handleChangeContent}
       ></textarea>
       <MemoSaveButton handleSave={handleClickSaveButton} />
-    </form>
+    </>
   );
 };
